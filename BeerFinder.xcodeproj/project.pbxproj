@@ -14,6 +14,9 @@
 		2EA9864B24D4506A00130DDF /* BeerFinder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2EA9864924D4506A00130DDF /* BeerFinder.xcdatamodeld */; };
 		2EA9864D24D4506B00130DDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EA9864C24D4506B00130DDF /* Assets.xcassets */; };
 		2EA9865024D4506B00130DDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EA9864E24D4506B00130DDF /* LaunchScreen.storyboard */; };
+		2EA9865924D4528600130DDF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA9865824D4528600130DDF /* NetworkManager.swift */; };
+		2EA9865C24D4531C00130DDF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA9865B24D4531C00130DDF /* Constants.swift */; };
+		2EA9866424D455FC00130DDF /* Beer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA9866324D455FC00130DDF /* Beer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		2EA9864C24D4506B00130DDF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2EA9864F24D4506B00130DDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2EA9865124D4506B00130DDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2EA9865824D4528600130DDF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		2EA9865B24D4531C00130DDF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2EA9866324D455FC00130DDF /* Beer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,9 @@
 		2EA9863F24D4506A00130DDF /* BeerFinder */ = {
 			isa = PBXGroup;
 			children = (
+				2EA9866224D455EE00130DDF /* Model */,
+				2EA9865A24D4530D00130DDF /* Utils */,
+				2EA9865724D4527300130DDF /* Networking */,
 				2EA9864024D4506A00130DDF /* AppDelegate.swift */,
 				2EA9864224D4506A00130DDF /* SceneDelegate.swift */,
 				2EA9864424D4506A00130DDF /* ViewController.swift */,
@@ -68,6 +77,30 @@
 				2EA9864924D4506A00130DDF /* BeerFinder.xcdatamodeld */,
 			);
 			path = BeerFinder;
+			sourceTree = "<group>";
+		};
+		2EA9865724D4527300130DDF /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2EA9865824D4528600130DDF /* NetworkManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		2EA9865A24D4530D00130DDF /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2EA9865B24D4531C00130DDF /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		2EA9866224D455EE00130DDF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2EA9866324D455FC00130DDF /* Beer.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,8 +176,11 @@
 			files = (
 				2EA9864524D4506A00130DDF /* ViewController.swift in Sources */,
 				2EA9864B24D4506A00130DDF /* BeerFinder.xcdatamodeld in Sources */,
+				2EA9865924D4528600130DDF /* NetworkManager.swift in Sources */,
 				2EA9864124D4506A00130DDF /* AppDelegate.swift in Sources */,
 				2EA9864324D4506A00130DDF /* SceneDelegate.swift in Sources */,
+				2EA9866424D455FC00130DDF /* Beer.swift in Sources */,
+				2EA9865C24D4531C00130DDF /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
