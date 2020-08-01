@@ -29,16 +29,17 @@ class NetworkManager {
                     print("Error", parsingError)
                 }
             }
-             
+            
             if let error = error {
-                let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(action)
                 DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    
                     presenter.present(alert, animated: false, completion: nil)
                 }
             }
-    
+            
             completion?(beer)
         })
         
@@ -65,13 +66,21 @@ class NetworkManager {
             if let dataResponse = data {
                 let message = String(data: dataResponse, encoding: .utf8)
                 print(message ?? "No message")
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Your beer has been uploaded", message: "Your beer is now visible in the list of beers.", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    
+                    presenter.present(alert, animated: false, completion: nil)
+                }
             }
             
             if let error = error {
-                let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(action)
                 DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    
                     presenter.present(alert, animated: false, completion: nil)
                 }
             }
@@ -97,16 +106,17 @@ class NetworkManager {
                     print("Error", parsingError)
                 }
             }
-             
+            
             if let error = error {
-                let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(action)
                 DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Something went wrong", message: error.localizedDescription, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    
                     presenter.present(alert, animated: false, completion: nil)
                 }
             }
-    
+            
             completion?(beersArray)
         })
         

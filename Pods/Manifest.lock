@@ -1,0 +1,16 @@
+PODS:
+  - Bondage (1.0.1)
+
+DEPENDENCIES:
+  - Bondage
+
+SPEC REPOS:
+  trunk:
+    - Bondage
+
+SPEC CHECKSUMS:
+  Bondage: 2e0bfd07265075668e95b792d22c1adf6d6c2f72
+
+PODFILE CHECKSUM: 73cc5d30f2fe44948d8001ddb427a5cad5482c6e
+
+COCOAPODS: 1.9.3
