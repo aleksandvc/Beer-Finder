@@ -15,11 +15,6 @@ class AllBeersViewModel: NSObject, BeersNetworkingProtocol {
     
     var beers = BindableArray<Beer>([])
     
-    override init() {
-        super.init()
-        
-    }
-    
     func getAllBeers(presenter: UIViewController, completion: (() -> ())?) {
         networkManager.getAllBeers(presenter: presenter, completion: { [weak self] beers in
             guard let strongSelf = self, let beers = beers else { return }
