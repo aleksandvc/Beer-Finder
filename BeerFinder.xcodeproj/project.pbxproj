@@ -84,7 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				2EA9867424D58B6A00130DDF /* UploadBeerModule */,
-				2EA9866F24D5855900130DDF /* OneBeerModule */,
+				2EA9866F24D5855900130DDF /* MoreInfoModule */,
 				2EA9866A24D5541600130DDF /* AllBeersModule */,
 				2EA9866224D455EE00130DDF /* Model */,
 				2EA9865A24D4530D00130DDF /* Utils */,
@@ -134,13 +134,13 @@
 			path = AllBeersModule;
 			sourceTree = "<group>";
 		};
-		2EA9866F24D5855900130DDF /* OneBeerModule */ = {
+		2EA9866F24D5855900130DDF /* MoreInfoModule */ = {
 			isa = PBXGroup;
 			children = (
 				2EA9867024D5857000130DDF /* MoreInfoViewController.swift */,
 				2EA9867224D5883A00130DDF /* MoreInfoViewModel.swift */,
 			);
-			path = OneBeerModule;
+			path = MoreInfoModule;
 			sourceTree = "<group>";
 		};
 		2EA9867424D58B6A00130DDF /* UploadBeerModule */ = {
