@@ -1,0 +1,6 @@
+framework module Bondage {
+  umbrella header "Bondage-umbrella.h"
+
+  export *
+  module * { export * }
+}
