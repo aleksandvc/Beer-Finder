@@ -12,6 +12,10 @@ protocol UploadBeerNetworkingProtocol {
     func uploadBeer(presenter: UIViewController, beer: Beer)
 }
 
+protocol ReloadTableViewDelegate: NSObject {
+    func reloadTableView(with beer: Beer)
+}
+
 class UploadNewBeerViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -21,6 +25,10 @@ class UploadNewBeerViewController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
     
     var viewModel: UploadBeerNetworkingProtocol? = nil
+    
+    var beer: Beer?
+    
+    weak var delegate: ReloadTableViewDelegate?
     
     private var isLastTextfieldTapped = false
     
@@ -32,6 +40,12 @@ class UploadNewBeerViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        guard let beer = beer else { return }
+        delegate?.reloadTableView(with: beer)
     }
     
     private func toggleUploadButton() {
@@ -60,6 +74,7 @@ class UploadNewBeerViewController: UIViewController {
         guard let name = nameTextField.text, let type = typeTextField.text, let description = descriptionTextField.text else { return }
         //id = 0 - no matter what is the id, the server sets it by itself
         let beer = Beer(id: 0, name: name, beerType: type, description: description)
+        self.beer = beer
         viewModel?.uploadBeer(presenter: self, beer: beer)
     }
     

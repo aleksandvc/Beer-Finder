@@ -7,19 +7,21 @@
 //
 
 import Foundation
-import Bondage
+import UIKit
 
-class AllBeersViewModel: NSObject, BeersNetworkingProtocol {
+class AllBeersViewModel {
     
     let networkManager = NetworkManager()
     
-    var beers = BindableArray<Beer>([])
+    var limitOfShownBeers = 8
+    var beers: [Beer] = []
+    var shownBeersArray:[Beer] = []
     
     func getAllBeers(presenter: UIViewController, completion: (() -> ())?) {
         networkManager.getAllBeers(presenter: presenter, completion: { [weak self] beers in
             guard let strongSelf = self, let beers = beers else { return }
             for beer in beers {
-                strongSelf.beers.value.append(beer)
+                strongSelf.beers.append(beer)
             }
             completion?()
         })

@@ -7,6 +7,5 @@ target 'BeerFinder' do
 
   # Pods for BeerFinder
 
-  pod "Bondage"
 
 end
