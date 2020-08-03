@@ -26,17 +26,21 @@ class AllBeersViewController: UIViewController {
         DispatchQueue.main.async {
             self.activityIndicator?.startAnimating()
         }
+
+        //Will work offline, but for the first launch ever user should be connected to internet to download the records.
+        getData()
+    }
+    
+    private func prepareForPagination() {
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++\(viewModel.beers.count)")
         
-        viewModel.getAllBeers(presenter: self) {
-            DispatchQueue.main.async {
-                self.activityIndicator?.stopAnimating()
-                var index = 0
-                for _ in 0...self.viewModel.limitOfShownBeers - 1 {
-                    self.viewModel.shownBeersArray.append(self.viewModel.beers[index])
-                    index = index + 1
-                }
-                self.beersTableView.reloadData()
+        var index = 0
+        if viewModel.beers.count > 0 {
+            for _ in 0...viewModel.limitOfNextLoadedBeers - 1 {
+                viewModel.shownBeersArray.append(viewModel.beers[index])
+                index = index + 1
             }
+            beersTableView.reloadData()
         }
     }
     
@@ -48,6 +52,21 @@ class AllBeersViewController: UIViewController {
         self.view.addSubview(indicator)
         self.view.bringSubviewToFront(indicator)
         return indicator
+    }
+    
+    func getData() {
+        viewModel.getAllBeers(presenter: self) { areDownloaded in
+            DispatchQueue.main.async {
+                self.activityIndicator?.stopAnimating()
+                if areDownloaded {
+                    self.prepareForPagination()
+                } else {
+                    self.viewModel.getBeersFromCoreData {
+                        self.prepareForPagination()
+                    }
+                }
+            }
+        }
     }
     
     func presentMoreInfoAboutBeerScreen(with id: Int) {
@@ -81,21 +100,19 @@ extension AllBeersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "\(indexPath.row) \(viewModel.shownBeersArray[indexPath.row].name)"
+        cell.textLabel?.text = "\(indexPath.row) \(viewModel.shownBeersArray[indexPath.row].value(forKey: "name") as? String ?? "")"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let id = viewModel.shownBeersArray[indexPath.row].id
+        let id = viewModel.shownBeersArray[indexPath.row].value(forKey: "id") as? Int ?? 0
         presentMoreInfoAboutBeerScreen(with: id)
         tableView.cellForRow(at: indexPath)?.isSelected = false
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == viewModel.shownBeersArray.count - 1 {
-            //Needed because when indexPath.row became greater than this number, we dont need to call loadMoreData anymore.
-            let remainderOfDivision = viewModel.beers.count % viewModel.limitOfShownBeers
-            if indexPath.row > (viewModel.beers.count - remainderOfDivision - 1) {
+            if indexPath.row == (viewModel.beers.count - 1) {
                 return
             }
             //load more data
@@ -105,7 +122,7 @@ extension AllBeersViewController: UITableViewDataSource {
     
     func loadMoreData() {
         var index = viewModel.shownBeersArray.count
-        for _ in 0..<viewModel.limitOfShownBeers {
+        for _ in 0..<viewModel.limitOfNextLoadedBeers {
             if viewModel.shownBeersArray.count == viewModel.beers.count {
                continue
             }
@@ -130,9 +147,8 @@ extension AllBeersViewController: UITableViewDelegate {
 
 extension AllBeersViewController: ReloadTableViewDelegate {
     func reloadTableView(with beer: Beer) {
-        viewModel.shownBeersArray.append(beer)
         DispatchQueue.main.async {
-            self.beersTableView.reloadData()
+            self.getData()
         }
     }
 }

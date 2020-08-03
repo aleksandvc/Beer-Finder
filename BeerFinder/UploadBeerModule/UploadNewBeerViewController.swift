@@ -9,7 +9,7 @@
 import UIKit
 
 protocol UploadBeerNetworkingProtocol {
-    func uploadBeer(presenter: UIViewController, beer: Beer)
+    func uploadBeer(presenter: UIViewController, beer: Beer, completion:@escaping  ()->())
 }
 
 protocol ReloadTableViewDelegate: NSObject {
@@ -42,12 +42,6 @@ class UploadNewBeerViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        guard let beer = beer else { return }
-        delegate?.reloadTableView(with: beer)
-    }
-    
     private func toggleUploadButton() {
         let shouldBeEnabled = (nameTextField.text != nil && nameTextField.text != "") && (typeTextField.text != nil && typeTextField.text != "") && (descriptionTextField.text != nil && descriptionTextField.text != "")
         uploadButton.backgroundColor = shouldBeEnabled ? .link : .systemGray
@@ -75,7 +69,14 @@ class UploadNewBeerViewController: UIViewController {
         //id = 0 - no matter what is the id, the server sets it by itself
         let beer = Beer(id: 0, name: name, beerType: type, description: description)
         self.beer = beer
-        viewModel?.uploadBeer(presenter: self, beer: beer)
+        viewModel?.uploadBeer(presenter: self, beer: beer) { [weak self] in
+            guard let strongSelf = self else { return }
+            DispatchQueue.main.async {
+                strongSelf.dismiss(animated: true, completion: {
+                    strongSelf.delegate?.reloadTableView(with: beer)
+                })
+            }
+        }
     }
     
     @IBAction func didTapBackButton(_ sender: Any) {

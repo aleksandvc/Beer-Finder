@@ -46,7 +46,7 @@ class NetworkManager {
         task.resume()
     }
     
-    func uploadNewBeer(presenter: UIViewController, beer: Beer) {
+    func uploadNewBeer(presenter: UIViewController, beer: Beer, completion:@escaping  ()->()) {
         guard let url = URL(string: AppEndPoints.postNewBeerURL) else { return }
         
         var request  = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
@@ -66,13 +66,7 @@ class NetworkManager {
             if let dataResponse = data {
                 let message = String(data: dataResponse, encoding: .utf8)
                 print(message ?? "No message")
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Your beer has been uploaded", message: "Your beer is now visible in the list of beers.", preferredStyle: .alert)
-                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                    alert.addAction(action)
-                    
-                    presenter.present(alert, animated: false, completion: nil)
-                }
+                completion()
             }
             
             if let error = error {
@@ -89,7 +83,7 @@ class NetworkManager {
         task.resume()
     }
     
-    func getAllBeers(presenter: UIViewController, completion: (([Beer]?)->())?) {
+    func getAllBeers(presenter: UIViewController, completion: (([Beer]?, Bool)->())?) {
         guard let url = URL(string: AppEndPoints.getAllBeersURL) else { return }
         
         let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
@@ -102,6 +96,7 @@ class NetworkManager {
                     let array = try decoder.decode([Beer].self,
                                                    from: dataResponse)
                     beersArray = array
+                    completion?(beersArray, true)
                 } catch let parsingError {
                     print("Error", parsingError)
                 }
@@ -114,10 +109,9 @@ class NetworkManager {
                     alert.addAction(action)
                     
                     presenter.present(alert, animated: false, completion: nil)
+                    completion?(nil, false)
                 }
             }
-            
-            completion?(beersArray)
         })
         
         task.resume()

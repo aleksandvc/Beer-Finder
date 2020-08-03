@@ -23,9 +23,8 @@ class MoreInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         backButton.layer.cornerRadius = 5
-        //Could get info directly from the previous screen, but need to use the api
+        //Could get info directly from the previous screen(and will work offline too), but need to use the api
         viewModel?.getBeer(presenter: self, completion: { [weak self] beer in
             guard let strongSelf = self, let beer = beer else { return }
             DispatchQueue.main.async {

@@ -13,7 +13,7 @@ class UploadBeerViewModel: NSObject, UploadBeerNetworkingProtocol {
     
     let networkManager = NetworkManager()
     
-    func uploadBeer(presenter: UIViewController, beer: Beer) {
-        networkManager.uploadNewBeer(presenter: presenter, beer: beer)
+    func uploadBeer(presenter: UIViewController, beer: Beer, completion:@escaping  ()->()) {
+        networkManager.uploadNewBeer(presenter: presenter, beer: beer, completion: completion)
     }
 }
